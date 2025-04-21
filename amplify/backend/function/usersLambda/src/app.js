@@ -38,67 +38,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-/************************************
- * HTTP Get method to list objects *
- ************************************/
-
-// app.get(path, async function (req, res) {
-//   var params = {
-//     TableName: tableName,
-//     Select: "ALL_ATTRIBUTES",
-//   };
-//
-//   try {
-//     const data = await ddbDocClient.send(new ScanCommand(params));
-//     res.json(data.Items);
-//   } catch (err) {
-//     res.statusCode = 500;
-//     res.json({ error: "Could not load items: " + err.message });
-//   }
-// });
-
-/************************************
- * HTTP Get method to query objects *
- ************************************/
-
-// app.get(path + hashKeyPath, async function (req, res) {
-//   const condition = {};
-//   condition[partitionKeyName] = {
-//     ComparisonOperator: "EQ",
-//   };
-//
-//   if (userIdPresent && req.apiGateway) {
-//     condition[partitionKeyName]["AttributeValueList"] = [
-//       req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH,
-//     ];
-//   } else {
-//     try {
-//       condition[partitionKeyName]["AttributeValueList"] = [
-//         convertUrlType(req.params[partitionKeyName], partitionKeyType),
-//       ];
-//     } catch (err) {
-//       res.statusCode = 500;
-//       res.json({ error: "Wrong column type " + err });
-//     }
-//   }
-//
-//   let queryParams = {
-//     TableName: tableName,
-//     KeyConditions: condition,
-//   };
-//
-//   try {
-//     const data = await ddbDocClient.send(new QueryCommand(queryParams));
-//     res.json(data.Items);
-//   } catch (err) {
-//     res.statusCode = 500;
-//     res.json({ error: "Could not load items: " + err.message });
-//   }
-// });
-
 /*****************************************
- * HTTP Get method for get single user *
+ * HTTP Get method to retrieve single user *
  *****************************************/
+
+// TODO: Refactor with User.findById() for fetching User
 app.get(path + "/:id", async function (req, res) {
   const userId = req.params.id;
 
@@ -118,8 +62,8 @@ app.get(path + "/:id", async function (req, res) {
       res.status(404).json({ error: "User not found" });
     }
   } catch (err) {
-    res.statusCode = 500;
-    res.json({ error: err, url: req.url });
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -127,6 +71,7 @@ app.get(path + "/:id", async function (req, res) {
  * HTTP post method for creating a user *
  *************************************/
 
+// TODO: The logic for new user defaults should belong in the User class
 app.post(path, async function (req, res) {
   const userId = crypto.randomUUID();
   let putItemParams = {
@@ -141,8 +86,8 @@ app.post(path, async function (req, res) {
     await ddbDocClient.send(new PutCommand(putItemParams));
     res.json({ id: userId });
   } catch (err) {
-    res.statusCode = 500;
-    res.json({ error: err, url: req.url, body: req.body });
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

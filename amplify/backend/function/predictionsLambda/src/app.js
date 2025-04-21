@@ -55,7 +55,7 @@ app.post(path + "/place", async function (req, res) {
       if (err instanceof UserNotFound) {
         return res.status(404).json({ error: "User not found" });
       }
-      return res.status(500).json({ error: err.message });
+      throw err;
     }
 
     try {
@@ -70,14 +70,11 @@ app.post(path + "/place", async function (req, res) {
       } else if (err instanceof InvalidDirection) {
         return res.status(400).json({ error: "Invalid direction provided" });
       } else {
-        console.error("Error during prediction:", err);
-        return res
-          .status(500)
-          .json({ error: err.message || "Error processing prediction" });
+        throw err;
       }
     }
   } catch (err) {
-    console.error("Unexpected error:", err);
+    console.error(err);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -94,7 +91,7 @@ app.post(path + "/close", async function (req, res) {
       if (err instanceof UserNotFound) {
         return res.status(404).json({ error: "User not found" });
       }
-      return res.status(500).json({ error: err.message });
+      throw err;
     }
 
     try {
@@ -112,14 +109,11 @@ app.post(path + "/close", async function (req, res) {
       } else if (err instanceof InvalidDirection) {
         return res.status(400).json({ error: "Invalid direction provided" });
       } else {
-        console.error("Error during prediction:", err);
-        return res
-          .status(500)
-          .json({ error: err.message || "Error processing prediction" });
+        throw err;
       }
     }
   } catch (err) {
-    console.error("Unexpected error:", err);
+    console.error(err);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
