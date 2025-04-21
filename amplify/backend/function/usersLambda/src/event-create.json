@@ -1,0 +1,9 @@
+{
+  "httpMethod": "POST",
+  "path": "/users",
+  "queryStringParameters": {},
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": ""
+}
