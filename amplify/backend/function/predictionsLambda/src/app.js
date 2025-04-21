@@ -17,6 +17,10 @@ const ddbDocClient = DynamoDBDocumentClient.from(ddbClient, {
 });
 
 const { Prediction, PredictionAlreadyClosed } = require("./models/prediction");
+const { fetchBitcoinPrice } = require("./utils/fetchBitcoinPrice.js");
+const {
+  schedulePredictionClosing,
+} = require("./utils/schedulePredictionClosing");
 const {
   User,
   UserNotFound,
@@ -60,10 +64,14 @@ app.post(path + "/place", async function (req, res) {
     }
 
     try {
-      await user.predict(req.body.direction);
-      // const duration =
-      //   req.body.duration || Prediction.DEFAULT_DURATION_IN_SECONDS;
-      // await scheduleClosing(user.id, duration);
+      const startPrice = await fetchBitcoinPrice();
+      const direction = req.body.direction;
+      let duration = req.body.duration
+        ? Number(req.body.duration)
+        : Prediction.DEFAULT_DURATION_IN_SECONDS;
+      await user.predict(startPrice, direction, duration);
+      const lastPredictionId = user.getLastPrediction().id;
+      await schedulePredictionClosing(user.id, lastPredictionId, duration);
       return res.status(200).json(user);
     } catch (err) {
       if (err instanceof PredictionInProgress) {
@@ -99,10 +107,10 @@ app.post(path + "/close", async function (req, res) {
     }
 
     try {
-      const finalPrice = 80_234_01;
+      const finalPrice = await fetchBitcoinPrice();
       const lastPrediction = user.getLastPrediction().close(finalPrice);
 
-      user.closeLastPrediction(lastPrediction);
+      await user.closeLastPrediction(lastPrediction);
 
       return res.status(200).json(user);
     } catch (err) {

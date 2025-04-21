@@ -80,7 +80,7 @@ class User {
     }
   }
 
-  async predict(direction, duration) {
+  async predict(startPrice, direction, duration) {
     // If any of the user's predictions don't have a final price, don't allow a new prediction.
     if (this.predictions.some((prediction) => !prediction.finalPrice)) {
       throw new PredictionInProgress();
@@ -93,7 +93,6 @@ class User {
     const startTime = Date.now();
     const finishTime =
       startTime + (duration || Prediction.DEFAULT_DURATION_IN_SECONDS);
-    const startPrice = 80_234_00;
 
     const newPrediction = new Prediction({
       direction,
@@ -103,6 +102,7 @@ class User {
     });
 
     this.predictions.push(newPrediction.toJSON());
+    console.log(this);
     return await this.save();
   }
 

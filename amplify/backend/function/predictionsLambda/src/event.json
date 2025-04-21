@@ -5,5 +5,5 @@
   "headers": {
     "Content-Type": "application/json"
   },
-  "body": "{\"userId\":\"fcae3a61-0b37-4910-9877-1f100eacff5b\", \"direction\": \"down\"}"
+  "body": "{\"userId\":\"fcae3a61-0b37-4910-9877-1f100eacff5b\", \"direction\": \"up\"}"
 }

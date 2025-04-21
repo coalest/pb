@@ -1,20 +1,4 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const {
-  DynamoDBDocumentClient,
-  GetCommand,
-  PutCommand,
-} = require("@aws-sdk/lib-dynamodb");
-
-const ddbClient = new DynamoDBClient({ region: process.env.REGION });
-const ddbDocClient = DynamoDBDocumentClient.from(ddbClient, {
-  convertClassInstanceToMap: true,
-});
 const crypto = require("crypto");
-
-let tableName = "usersTable";
-if (process.env.ENV && process.env.ENV !== "NONE") {
-  tableName = tableName + "-" + process.env.ENV;
-}
 
 class PredictionAlreadyClosed extends Error {
   constructor(message) {
