@@ -90,10 +90,9 @@ class User {
       throw new InvalidDirection();
     }
 
-    const DEFAULT_DURATION = 60 * 60 * 1000;
-
     const startTime = Date.now();
-    const finishTime = startTime + (duration || DEFAULT_DURATION);
+    const finishTime =
+      startTime + (duration || Prediction.DEFAULT_DURATION_IN_SECONDS);
     const startPrice = 80_234_00;
 
     const newPrediction = new Prediction({

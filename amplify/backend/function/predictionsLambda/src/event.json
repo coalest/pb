@@ -1,6 +1,6 @@
 {
   "httpMethod": "POST",
-  "path": "/predictions/close",
+  "path": "/predictions/place",
   "queryStringParameters": {},
   "headers": {
     "Content-Type": "application/json"

@@ -25,7 +25,7 @@ class PredictionAlreadyClosed extends Error {
 
 class Prediction {
   // default prediction duration is 60 seconds
-  static DEFAULT_DURATION = 60 * 1000;
+  static DEFAULT_DURATION_IN_SECONDS = 60;
   static DIRECTIONS = { UP: "up", DOWN: "down" };
   static STATUSES = { WON: "won", LOST: "lost" };
 
