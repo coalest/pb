@@ -12,13 +12,6 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "closePredictionsLambda": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
     "predictionsLambda": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

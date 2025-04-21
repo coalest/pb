@@ -6,10 +6,6 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-const {
-  SchedulerClient,
-  CreateScheduleCommand,
-} = require("@aws-sdk/client-scheduler");
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
@@ -47,59 +43,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-const scheduler = new SchedulerClient({ region: "eu-north-1" });
-
-async function scheduleClosing(userId, durationInSeconds) {
-  const durationInMilliseconds = durationInSeconds * 1000;
-  const scheduleName = `trigger-close-prediction-lambda-${Date.now()}`;
-  const scheduledTime = new Date(
-    Date.now() + durationInMilliseconds,
-  ).toISOString();
-
-  // TODO: Dev env hardcoded here for lambda Arn
-  const params = {
-    Name: scheduleName,
-    ScheduleExpression: `at(${scheduledTime.slice(0, -5)})`,
-    Target: {
-      Arn: "arn:aws:lambda:eu-north-1:393809552328:function:predictionsLambda-dev",
-      RoleArn:
-        "arn:aws:iam::393809552328:role/predictabitLambdaRole9b00e3de-dev",
-      Input: JSON.stringify({
-        Body: JSON.stringify({
-          timestamp: new Date().toISOString(),
-          scheduledTime: scheduledTime,
-          userId: userId,
-        }),
-        Method: "POST",
-        Uri: "https://8f3eziiwfh.execute-api.eu-north-1.amazonaws.com/dev/predictions/close",
-        Headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-    },
-    FlexibleTimeWindow: {
-      Mode: "OFF",
-    },
-  };
-  console.log(params);
-
-  try {
-    const command = new CreateScheduleCommand(params);
-    const result = await scheduler.send(command);
-    console.log("Schedule created successfully:", result);
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: `Second Lambda scheduled to run at ${scheduledTime}`,
-        scheduleName: scheduleName,
-      }),
-    };
-  } catch (err) {
-    console.error("Error creating schedule:", err);
-    throw err;
-  }
-}
-
 /************************************
  * HTTP post method to place a prediction *
  *************************************/
@@ -118,8 +61,8 @@ app.post(path + "/place", async function (req, res) {
 
     try {
       await user.predict(req.body.direction);
-      const duration =
-        req.body.duration || Prediction.DEFAULT_DURATION_IN_SECONDS;
+      // const duration =
+      //   req.body.duration || Prediction.DEFAULT_DURATION_IN_SECONDS;
       // await scheduleClosing(user.id, duration);
       return res.status(200).json(user);
     } catch (err) {
