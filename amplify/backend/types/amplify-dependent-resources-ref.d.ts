@@ -1,5 +1,10 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
+    "predictionsApi": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "usersApi": {
       "ApiId": "string",
       "ApiName": "string",
@@ -7,6 +12,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "predictionsLambda": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "usersLambda": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

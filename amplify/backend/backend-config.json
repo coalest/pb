@@ -1,5 +1,19 @@
 {
   "api": {
+    "predictionsApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "predictionsLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "usersApi": {
       "dependsOn": [
         {
@@ -17,6 +31,25 @@
   },
   "auth": {},
   "function": {
+    "predictionsLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "usersTable"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "usersLambda": {
       "build": true,
       "dependsOn": [
@@ -38,6 +71,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_predictionsLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "predictionsLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_predictionsLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "predictionsLambda"
+        }
+      ]
+    },
     "AMPLIFY_function_usersLambda_deploymentBucketName": {
       "usedBy": [
         {

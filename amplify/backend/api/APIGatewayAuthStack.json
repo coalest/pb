@@ -13,6 +13,9 @@
     },
     "usersApi": {
       "Type": "String"
+    },
+    "predictionsApi": {
+      "Type": "String"
     }
   },
   "Conditions": {

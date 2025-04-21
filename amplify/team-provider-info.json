@@ -16,14 +16,19 @@
       "function": {
         "usersLambda": {
           "deploymentBucketName": "amplify-predictabit-dev-3d03b-deployment",
-          "s3Key": "amplify-builds/usersLambda-323049594e67545a656f-build.zip"
+          "s3Key": "amplify-builds/usersLambda-354d746e756462514b50-build.zip"
+        },
+        "predictionsLambda": {
+          "deploymentBucketName": "amplify-predictabit-dev-3d03b-deployment",
+          "s3Key": "amplify-builds/predictionsLambda-7a685057793872527749-build.zip"
         }
       },
       "storage": {
         "usersTable": {}
       },
       "api": {
-        "usersApi": {}
+        "usersApi": {},
+        "predictionsApi": {}
       }
     }
   }

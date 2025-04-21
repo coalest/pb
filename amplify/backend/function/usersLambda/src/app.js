@@ -110,12 +110,10 @@ app.get(path + "/:id", async function (req, res) {
   };
 
   try {
-    const { Item: User } = await ddbDocClient.send(
-      new GetCommand(getItemParams),
-    );
+    const { Item } = await ddbDocClient.send(new GetCommand(getItemParams));
 
-    if (User) {
-      res.json(User);
+    if (Item) {
+      res.json(Item);
     } else {
       res.status(404).json({ error: "User not found" });
     }

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "paths": {
+    "/predictions/place": {
+      "name": "/predictions/place",
+      "lambdaFunction": "predictionsLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/predictions/close": {
+      "name": "/predictions/close",
+      "lambdaFunction": "predictionsLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
+
