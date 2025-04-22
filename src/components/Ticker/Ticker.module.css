@@ -1,0 +1,23 @@
+.ticker {
+  grid-area: ticker;
+  justify-self: center;
+}
+
+.tickerPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+}
+
+.upArrow {
+  display: inline;
+  color: #06d6a0;
+}
+
+.downArrow {
+  display: inline;
+  color: #ef476f;
+  transform: rotate(180deg);
+}

@@ -1,0 +1,13 @@
+.gameBox {
+  border: 2px dashed #000000;
+  background: #ffffff;
+  width: 174px;
+  height: 174px;
+  display: block;
+
+  grid-area: gamebox;
+
+  color: black;
+  text-align: center;
+  justify-self: center;
+}

@@ -1,0 +1,12 @@
+.tutorial {
+  padding: 1.5rem;
+  margin-top: auto; /* Pushes the element to the bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+.tutorial h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}

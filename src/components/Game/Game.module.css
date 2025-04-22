@@ -1,0 +1,19 @@
+.game {
+  grid-area: main;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 50px;
+
+  padding-top: 50px;
+}
+
+.gameBoxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px;
+  gap: 30px;
+}

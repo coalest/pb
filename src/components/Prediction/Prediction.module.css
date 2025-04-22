@@ -1,0 +1,91 @@
+.prediction {
+  grid-area: left-sidebar;
+  border-right: 2px solid #27437b;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: #333232;
+}
+
+.prediction h2 {
+  font-size: 2rem;
+  line-height: 2.875rem;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.upArrow {
+  display: inline;
+  color: #06d6a0;
+}
+
+.downArrow {
+  display: inline;
+  color: #ef476f;
+  transform: rotate(180deg);
+}
+
+.upButton,
+.downButton,
+.upButtonSelected,
+.downButtonSelected {
+  background: white;
+  color: black;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 140px;
+}
+
+.upButtonSelected {
+  border: 5px solid #06d6a0;
+}
+
+.upButton:hover,
+.upButtonSelected:hover {
+  border-color: #06d6a0;
+}
+
+.downButtonSelected {
+  border: 5px solid #ef476f;
+}
+
+.downButton:hover,
+.downButtonSelected:hover {
+  border-color: #ef476f;
+}
+
+.predictionButton {
+  display: block;
+  width: 100%;
+  margin: 25px 24px;
+  color: white;
+  background: #004adf;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.predictionButton:hover {
+  background: #4478e1;
+}
+
+.predictionButton:disabled {
+  background: #95a4c2;
+}
+
+button {
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+  transition-duration: 0.4s;
+}
+
+button span {
+  font-weight: 700;
+  font-size: 1.5rem;
+}

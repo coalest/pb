@@ -1,0 +1,5 @@
+.countdown {
+  grid-area: countdown;
+  justify-self: center;
+  font-size: 2rem;
+}
