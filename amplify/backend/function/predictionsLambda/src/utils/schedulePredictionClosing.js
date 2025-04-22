@@ -1,5 +1,7 @@
 const { SFNClient, StartExecutionCommand } = require("@aws-sdk/client-sfn");
 
+// TODO: Fix hardcoded url and arns to handle other envs (staging/prod/etc)
+// TODO: Set retry behavior
 async function schedulePredictionClosing(userId, predictionId, duration) {
   const response = await new SFNClient().send(
     new StartExecutionCommand({

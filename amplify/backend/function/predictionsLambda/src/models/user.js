@@ -86,6 +86,7 @@ class User {
       throw new PredictionInProgress();
     }
 
+    // TODO: Move this logic to Prediction class
     if (!Object.values(Prediction.DIRECTIONS).includes(direction)) {
       throw new InvalidDirection();
     }

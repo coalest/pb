@@ -1,11 +1,10 @@
 const axios = require("axios");
 
 async function fetchBitcoinPrice() {
+  const API_URL = "https://okx.com/api/v5/market/ticker?instId=BTC-USD-SWAP";
+
   try {
-    const response = await axios.get(
-      "https://okx.com/api/v5/market/ticker?instId=BTC-USD-SWAP",
-    );
-    console.log(response.data.data[0]);
+    const response = await axios.get(API_URL);
 
     const bitcoinPriceInCents = Math.round(
       Number.parseFloat(response.data.data[0].last, 10) * 100,

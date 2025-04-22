@@ -64,14 +64,18 @@ app.post(path + "/place", async function (req, res) {
     }
 
     try {
-      const startPrice = await fetchBitcoinPrice();
       const direction = req.body.direction;
-      let duration = req.body.duration
+      const duration = req.body.duration
         ? Number(req.body.duration)
         : Prediction.DEFAULT_DURATION_IN_SECONDS;
+      const startPrice = await fetchBitcoinPrice();
+
+      // TODO: Wrap these two async functions with Promise.all and rollback
+      // completed action if other one fails
       await user.predict(startPrice, direction, duration);
       const lastPredictionId = user.getLastPrediction().id;
       await schedulePredictionClosing(user.id, lastPredictionId, duration);
+
       return res.status(200).json(user);
     } catch (err) {
       if (err instanceof PredictionInProgress) {
