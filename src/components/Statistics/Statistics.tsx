@@ -1,13 +1,16 @@
 import React from "react";
 import styles from "./Statistics.module.css";
 
+import { useUser } from "../../hooks/useUser";
+
 const Statistics: React.FC = () => {
+  const { user } = useUser();
+
   return (
     <div className={"statistics " + styles.statistics}>
       <h2>Your Score</h2>
-      <div className={styles.score}>0</div>
+      <div className={styles.score}>{user?.score}</div>
       <h2>History</h2>
-      <caption></caption>
       <div style={{ overflowX: "auto", width: "100%", padding: "0.25rem" }}>
         <table>
           <thead>
