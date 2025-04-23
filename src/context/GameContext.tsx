@@ -1,12 +1,7 @@
 import React, { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
-import {
-  User,
-  Prediction,
-  PredictionDirection,
-  PredictionStatus,
-} from "../shared.types";
+import { User, Prediction, PredictionDirection } from "../shared.types";
 
 import { predictionService } from "../services/predictionService";
 import { userService } from "../services/userService";
@@ -20,7 +15,6 @@ type GameContextType = {
   isCountingDown: boolean;
   isLoading: boolean;
   error: string | null;
-  predictionResult: PredictionStatus;
   userScore: number | null;
 };
 
@@ -35,15 +29,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [lockedDirection, setLockedDirection] =
     useState<PredictionDirection>(null);
-  const [predictionResult, setPredictionResult] =
-    useState<PredictionStatus>(null);
   const [userScore, setUserScore] = useState<number | null>(null);
 
   const resetGame = () => {
     setCountdownKey(countdownKey + 1);
     setIsCountingDown(false);
-    setPredictionResult(null);
     setLockedDirection(null);
+    setPrediction(null);
   };
 
   const [prediction, setPrediction] = useState<Prediction | null>(null);
@@ -88,7 +80,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
       setUserScore(user.score);
       setIsLoading(false);
       setPrediction(lastPrediction);
-      setPredictionResult(lastPrediction.status);
       setIsCountingDown(false);
       setTimeout(resetGame, 3000);
       toast(`You ${lastPrediction.status}!`);
@@ -115,7 +106,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
         isLoading,
         error,
         closeRound,
-        predictionResult,
         userScore,
       }}
     >

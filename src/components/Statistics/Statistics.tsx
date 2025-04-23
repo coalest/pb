@@ -13,7 +13,7 @@ const Statistics: React.FC = () => {
   return (
     <div className={"statistics " + styles.statistics}>
       <h2>Your Score</h2>
-      <div className={styles.score}>{userScore}</div>
+      <div className={styles.score}>{user?.score || userScore}</div>
       <h2>History</h2>
       <div className={styles.tableContainer}>
         <table>
