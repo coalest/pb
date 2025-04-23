@@ -27,7 +27,9 @@ The endpoint isn't triggered client side (because the client browser could be cl
 
 The external API used for fetching Bitcoin prices from OKX. The [GET /ticker](https://www.okx.com/docs-v5/en/#order-book-trading-market-data-get-ticker) is used when predictions are placed or closed. And a [tickers websocket](https://www.okx.com/docs-v5/en/#order-book-trading-market-data-ws-tickers-channel) is used for fetching live prices on the client.
 
-In hindsight, it appears that there is often a significant mismatch between the prices from the websocket and the HTTP endpoint. Which leads to some confusing UX. Given more time, I would have gone with a different architecture to get around that issue.
+#### API limitations
+
+The HTTP endpoints can also be slow at times. Not saying that to complain (it's a free API), but to say that if this were a real life challenge I would have probably considered a few other factors: performance, cost, UX, customer needs and potentially have chosen a websocket-based approach for predictions to achieve real time updates that would enhance user experience. For the sake of this exercise and going for an API-first approach, I decided to build the solution mentioned above, partially because of it's ease of implementation and partly of what free API options were available to me.
 
 ```mermaid
 architecture-beta
@@ -90,7 +92,7 @@ There are many things I would do if I had more time (or if this was going to be 
 2. Refactor the backend API (would switch to a websocket for predictions to reduce latency).
 3. Switch lambda functions to TS from JS.
 4. Add error handling.
-5. Think about buffering the price stream (numbers change up to ever 100ms which is a little fast on the eyes).
+5. Think about buffering the price stream (numbers change up to every 100ms which is a little fast on the eyes).
 6. Add more interactivity/animations to make the 60 seconds more engaging for users.
 
 ### 6. Requirements
