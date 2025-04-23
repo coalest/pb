@@ -27,12 +27,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(userData);
   };
 
+  // Fetch user from localStorage or create one and store in localStorage
   useEffect(() => {
     const initializeUser = async () => {
       try {
         setLoading(true);
 
-        // Check if UUID exists in localStorage
         const storedId: string | null = localStorage.getItem(
           API_CONFIG.STORAGE_KEY,
         );
@@ -41,11 +41,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
         if (storedId) {
           userData = await userService.fetchUser(storedId);
-          console.log("user fetched: " + userData);
         } else {
-          // No UUID found, create a new user
           userData = await userService.createUser();
-          console.log("user created: " + userData);
         }
 
         setUser(userData);

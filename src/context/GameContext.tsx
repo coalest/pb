@@ -29,14 +29,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [lockedDirection, setLockedDirection] =
     useState<PredictionDirection>(null);
-
-  const resetGame = () => {
-    setCountdownKey(countdownKey + 1);
-    setIsCountingDown(false);
-    setLockedDirection(null);
-    setPrediction(null);
-  };
-
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +63,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     } finally {
       setIsLoading(false);
     }
+  };
+  const resetGame = () => {
+    setCountdownKey(countdownKey + 1);
+    setIsCountingDown(false);
+    setLockedDirection(null);
+    setPrediction(null);
   };
   const fetchResults = async (userId: string) => {
     try {

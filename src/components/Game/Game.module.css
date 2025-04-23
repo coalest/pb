@@ -35,6 +35,9 @@
     calc(100% / 3) 100% space;
   clip-path: inset(0 100% 0 0);
   animation: l1 2s steps(4) infinite;
+  place-self: center;
+  margin-left: 0.25rem;
+  margin-top: 1rem;
 }
 @keyframes l1 {
   to {

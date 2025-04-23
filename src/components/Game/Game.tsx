@@ -9,28 +9,17 @@ import { useGame } from "../../hooks/useGame.tsx";
 
 import { formatPriceInCents } from "../../utils/formatPrice.ts";
 
-const Loading: React.FC = () => {
+const LoadingDots: React.FC = () => <div className={styles.loader}></div>;
+
+const Loader: React.FC = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "180px",
-        height: "180px",
-      }}
-    >
+    <div style={{ display: "flex", width: "180px", height: "180px" }}>
       <div
         style={{ placeSelf: "center", fontSize: "1.5rem", textWrap: "nowrap" }}
       >
         Fetching price
       </div>
-      <div
-        className={styles.loader}
-        style={{
-          placeSelf: "center",
-          marginLeft: "0.25rem",
-          marginTop: "1rem",
-        }}
-      ></div>
+      <LoadingDots />
     </div>
   );
 };
@@ -40,8 +29,8 @@ const Game: React.FC = () => {
 
   return (
     <div className={"game " + styles.game}>
-      <Ticker refreshInterval={1000} crypto={"BTC"} initialPrice={0} />
-      {isLoading && <Loading />}
+      <Ticker refreshInterval={1000} crypto={"BTC"} />
+      {isLoading && <Loader />}
       {!isLoading && <Countdown duration={60} />}
       <div className={styles.gameBoxes}>
         <GameBox>

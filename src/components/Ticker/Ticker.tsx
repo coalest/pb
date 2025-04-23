@@ -10,22 +10,13 @@ import { API_CONFIG } from "../../config/api";
 interface TickerProps {
   crypto: string;
   refreshInterval: number;
-  initialPrice: number;
 }
 
-type TickerPrice = {
-  price: number;
-};
-
 const Ticker: React.FC<TickerProps> = ({
-  initialPrice = 0,
   crypto = "BTC",
   refreshInterval = 1000,
 }) => {
-  const [tickerPrice, setTickerPrice] = useState<TickerPrice>({
-    price: initialPrice,
-  });
-
+  const [tickerPrice, setTickerPrice] = useState<number | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   // TODO: Extract websocket logic into a hook/service
@@ -59,7 +50,7 @@ const Ticker: React.FC<TickerProps> = ({
 
           if (data.arg && data.arg.channel === "tickers" && data.data) {
             const newPrice: number = parseFloat(data.data[0].last);
-            setTickerPrice(() => ({ price: newPrice }));
+            setTickerPrice(newPrice);
           }
         } catch (err) {
           console.error("Error parsing WebSocket data:", err);
@@ -101,7 +92,7 @@ const Ticker: React.FC<TickerProps> = ({
         <BitcoinLogo className={styles.bitcoinLogo} />
 
         <div className="price" style={{ display: "inline", fontSize: "5rem" }}>
-          {tickerPrice.price === 0 ? " " : formatPrice(tickerPrice.price)}
+          {tickerPrice && formatPrice(tickerPrice)}
         </div>
         <div style={{ display: "inline-flex", flexDirection: "column" }}>
           <Arrow className={styles.upArrow} />
