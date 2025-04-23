@@ -30,9 +30,7 @@
 }
 
 .upButton,
-.downButton,
-.upButtonSelected,
-.downButtonSelected {
+.downButton {
   background: white;
   color: black;
   text-transform: uppercase;
@@ -43,21 +41,19 @@
   width: 140px;
 }
 
-.upButtonSelected {
+.upButton.active {
   border: 5px solid var(--green);
 }
 
-.upButton:hover,
-.upButtonSelected:hover {
+.upButton:hover {
   border-color: var(--green);
 }
 
-.downButtonSelected {
+.downButton.active {
   border: 5px solid var(--pink);
 }
 
-.downButton:hover,
-.downButtonSelected:hover {
+.downButton:hover {
   border-color: var(--pink);
 }
 

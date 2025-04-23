@@ -11,6 +11,9 @@ type CountdownProps = {
 const Countdown = ({ duration }: CountdownProps) => {
   const { countdownKey, isCountingDown, closeRound } = useGame();
   const { user } = useUser();
+  const onComplete = () => {
+    if (user !== null) closeRound(user?.id);
+  };
 
   return (
     <div className={styles.countdown}>
@@ -22,11 +25,7 @@ const Countdown = ({ duration }: CountdownProps) => {
         colors={["#004adf", "#ee4b2b"]}
         colorsTime={[60, 10, 0]}
         isSmoothColorTransition={false}
-        onComplete={() => {
-          if (user !== null) {
-            closeRound(user.id);
-          }
-        }}
+        onComplete={onComplete}
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>

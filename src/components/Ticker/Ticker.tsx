@@ -19,7 +19,6 @@ const Ticker: FC<TickerProps> = ({
   const [tickerPrice, setTickerPrice] = useState<number | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
-  // TODO: Extract websocket logic into a hook/service
   let ws: WebSocket | null = null;
 
   useEffect(() => {
@@ -78,22 +77,24 @@ const Ticker: FC<TickerProps> = ({
 
     connectWebSocket();
 
-    // Close websocket when unmounted
     return () => {
-      if (ws) {
-        ws.close();
-      }
+      if (ws) ws.close();
     };
   }, [refreshInterval, crypto]);
+
+  const TickerPrice: FC = () => {
+    return (
+      <div className="price" style={{ display: "inline", fontSize: "5rem" }}>
+        {tickerPrice && formatPrice(tickerPrice)}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.ticker}>
       <div className={styles.tickerPrice}>
         <BitcoinLogo className={styles.bitcoinLogo} />
-
-        <div className="price" style={{ display: "inline", fontSize: "5rem" }}>
-          {tickerPrice && formatPrice(tickerPrice)}
-        </div>
+        <TickerPrice />
         <div style={{ display: "inline-flex", flexDirection: "column" }}>
           <Arrow className={styles.upArrow} />
           <Arrow className={styles.downArrow} />

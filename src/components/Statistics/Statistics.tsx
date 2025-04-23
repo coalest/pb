@@ -4,10 +4,32 @@ import styles from "./Statistics.module.css";
 import { useUser } from "../../hooks/useUser";
 
 import { formatPriceInCents } from "../../utils/formatPrice";
+import { Prediction } from "../../shared.types.ts";
 
 const Statistics: FC = () => {
   const { user } = useUser();
 
+  const isInProgress = (prediction: Prediction) =>
+    !prediction.status || !prediction.finalPrice;
+
+  const UserHistory: FC = () => {
+    return user?.predictions.toReversed().map((prediction, index: number) => {
+      if (isInProgress(prediction)) return;
+
+      const round = user.predictions.length - index;
+      return (
+        <tr key={prediction.id}>
+          <td>{round}</td>
+          <td>{prediction.status}</td>
+          <td>{prediction.direction}</td>
+          <td>{formatPriceInCents(prediction.startPrice)}</td>
+          <td>
+            {prediction.finalPrice && formatPriceInCents(prediction.finalPrice)}
+          </td>
+        </tr>
+      );
+    });
+  };
   return (
     <div className={"statistics " + styles.statistics}>
       <h2>Your Score</h2>
@@ -25,20 +47,7 @@ const Statistics: FC = () => {
             </tr>
           </thead>
           <tbody>
-            {user?.predictions.toReversed().map((prediction, index: number) => {
-              if (!prediction.status || !prediction.finalPrice) return; // Skip in progress predictions
-
-              const round = user.predictions.length - index;
-              return (
-                <tr key={user.id}>
-                  <td>{round}</td>
-                  <td>{prediction.status}</td>
-                  <td>{prediction.direction}</td>
-                  <td>{formatPriceInCents(prediction.startPrice)}</td>
-                  <td>{formatPriceInCents(prediction.finalPrice)}</td>
-                </tr>
-              );
-            })}
+            <UserHistory />
           </tbody>
         </table>
       </div>

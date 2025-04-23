@@ -27,11 +27,22 @@ const Loader: FC = () => {
 const Game: FC = () => {
   const { prediction, lockedDirection, isLoading } = useGame();
 
+  const lockedPrice = prediction && formatPriceInCents(prediction.startPrice);
+  const finalPrice =
+    prediction?.finalPrice && formatPriceInCents(prediction.finalPrice);
+
+  const Timer = () => {
+    if (isLoading) {
+      return <Loader />;
+    } else {
+      return <Countdown duration={60} />;
+    }
+  };
+
   return (
     <div className={"game " + styles.game}>
       <Ticker refreshInterval={1000} crypto={"BTC"} />
-      {isLoading && <Loader />}
-      {!isLoading && <Countdown duration={60} />}
+      <Timer />
       <div className={styles.gameBoxes}>
         <GameBox>
           <div>
@@ -42,16 +53,13 @@ const Game: FC = () => {
         <GameBox>
           <div>
             <h4>Locked price</h4>
-            <p>{prediction && formatPriceInCents(prediction.startPrice)}</p>
+            <p>{lockedPrice}</p>
           </div>
         </GameBox>
         <GameBox>
           <div>
             <h4>Final price</h4>
-            <p>
-              {prediction?.finalPrice &&
-                formatPriceInCents(prediction.finalPrice)}
-            </p>
+            <p>{finalPrice}</p>
           </div>
         </GameBox>
       </div>
