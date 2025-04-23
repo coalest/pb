@@ -18,7 +18,11 @@ const Loading: React.FC = () => {
         height: "180px",
       }}
     >
-      <div style={{ placeSelf: "center", fontSize: "2rem" }}>Loading</div>
+      <div
+        style={{ placeSelf: "center", fontSize: "1.5rem", textWrap: "nowrap" }}
+      >
+        Fetching price
+      </div>
       <div
         className={styles.loader}
         style={{
