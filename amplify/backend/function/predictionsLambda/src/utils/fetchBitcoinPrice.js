@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 async function fetchBitcoinPrice() {
-  const API_URL = "https://okx.com/api/v5/market/ticker?instId=BTC-USD-SWAP";
+  const API_URL = "https://okx.com/api/v5/market/ticker?instId=BTC-USDT";
 
   try {
     const response = await axios.get(API_URL);
