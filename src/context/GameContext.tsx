@@ -1,10 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
 import { User, Prediction, PredictionDirection } from "../shared.types";
 
 import { predictionService } from "../services/predictionService";
 import { userService } from "../services/userService";
+import { UserContext } from "./UserContext";
 
 type GameContextType = {
   prediction: Prediction | null;
@@ -15,7 +16,6 @@ type GameContextType = {
   isCountingDown: boolean;
   isLoading: boolean;
   error: string | null;
-  userScore: number | null;
 };
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -29,7 +29,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [lockedDirection, setLockedDirection] =
     useState<PredictionDirection>(null);
-  const [userScore, setUserScore] = useState<number | null>(null);
 
   const resetGame = () => {
     setCountdownKey(countdownKey + 1);
@@ -41,6 +40,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { updateUser } = useContext(UserContext);
 
   const placeNewPrediction = async (
     userId: string,
@@ -77,7 +78,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
       const lastPrediction: Prediction =
         user.predictions[user.predictions.length - 1];
 
-      setUserScore(user.score);
+      updateUser?.(user);
       setIsLoading(false);
       setPrediction(lastPrediction);
       setIsCountingDown(false);
@@ -92,7 +93,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const closeRound = async (userId: string) => {
     setIsLoading(true);
-    setTimeout(() => fetchResults(userId), 1000);
+    setTimeout(() => fetchResults(userId), 3000);
   };
 
   return (
@@ -106,7 +107,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
         isLoading,
         error,
         closeRound,
-        userScore,
       }}
     >
       {children}

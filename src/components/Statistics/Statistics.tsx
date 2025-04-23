@@ -2,18 +2,16 @@ import React from "react";
 import styles from "./Statistics.module.css";
 
 import { useUser } from "../../hooks/useUser";
-import { useGame } from "../../hooks/useGame";
 
 import { formatPriceInCents } from "../../utils/formatPrice";
 
 const Statistics: React.FC = () => {
   const { user } = useUser();
-  const { userScore } = useGame();
 
   return (
     <div className={"statistics " + styles.statistics}>
       <h2>Your Score</h2>
-      <div className={styles.score}>{user?.score || userScore}</div>
+      <div className={styles.score}>{user?.score}</div>
       <h2>History</h2>
       <div className={styles.tableContainer}>
         <table>

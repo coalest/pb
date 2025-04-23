@@ -7,6 +7,7 @@ export type UserContextType = {
   user: User | null;
   loading: boolean;
   error: string | null;
+  updateUser?: (userData: User) => void;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -21,6 +22,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const updateUser = (userData: User) => {
+    setUser(userData);
+  };
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -60,7 +65,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, error }}>
+    <UserContext.Provider value={{ user, loading, error, updateUser }}>
       {children}
     </UserContext.Provider>
   );
