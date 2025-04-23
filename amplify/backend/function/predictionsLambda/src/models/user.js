@@ -93,7 +93,7 @@ class User {
 
     const startTime = Date.now();
     const finishTime =
-      startTime + (duration || Prediction.DEFAULT_DURATION_IN_SECONDS);
+      startTime + (duration || Prediction.DEFAULT_DURATION_IN_SECONDS) * 1000;
 
     const newPrediction = new Prediction({
       direction,

@@ -1,13 +1,13 @@
 import type { FC } from "react";
 import styles from "./Statistics.module.css";
 
-import { useUser } from "../../hooks/useUser";
+import { useGame } from "../../hooks/useGame";
 
 import { formatPriceInCents } from "../../utils/formatPrice";
 import { Prediction } from "../../shared.types.ts";
 
 const Statistics: FC = () => {
-  const { user } = useUser();
+  const { user } = useGame();
 
   const isInProgress = (prediction: Prediction) =>
     !prediction.status || !prediction.finalPrice;

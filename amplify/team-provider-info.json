@@ -20,7 +20,7 @@
         },
         "predictionsLambda": {
           "deploymentBucketName": "amplify-predictabit-dev-3d03b-deployment",
-          "s3Key": "amplify-builds/predictionsLambda-366855494549514c6d6b-build.zip"
+          "s3Key": "amplify-builds/predictionsLambda-424a38525975324e6269-build.zip"
         }
       },
       "storage": {

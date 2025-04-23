@@ -6,14 +6,12 @@ import Arrow from "../Arrow/Arrow.tsx";
 import Button from "../Button/Button.tsx";
 import Tutorial from "../Tutorial/Tutorial.tsx";
 
-import { useUser } from "../../hooks/useUser";
 import { useGame } from "../../hooks/useGame";
 
 import { PredictionDirection } from "../../shared.types.ts";
 
 const Prediction: FC = () => {
-  const { user } = useUser();
-  const { placeNewPrediction, lockedDirection } = useGame();
+  const { user, placeNewPrediction, lockedDirection } = useGame();
 
   const [currentDirection, setCurrentDirection] =
     useState<PredictionDirection | null>(null);
@@ -21,11 +19,16 @@ const Prediction: FC = () => {
   const disabled = !!lockedDirection;
 
   const upButtonStyles =
-    (currentDirection === PredictionDirection.UP ? `${styles.active} ` : "") +
-    styles.upButton;
+    currentDirection === PredictionDirection.UP ||
+    lockedDirection === PredictionDirection.UP
+      ? `${styles.upButton} ${styles.active}`
+      : styles.upButton;
+
   const downButtonStyles =
-    (currentDirection === PredictionDirection.DOWN ? `${styles.active} ` : "") +
-    styles.downButton;
+    currentDirection === PredictionDirection.DOWN ||
+    lockedDirection === PredictionDirection.DOWN
+      ? `${styles.downButton} ${styles.active}`
+      : styles.downButton;
 
   const handleUpClick = () => setCurrentDirection(PredictionDirection.UP);
   const handleDownClick = () => setCurrentDirection(PredictionDirection.DOWN);

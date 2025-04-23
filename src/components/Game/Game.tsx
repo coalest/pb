@@ -25,17 +25,18 @@ const Loader: FC = () => {
 };
 
 const Game: FC = () => {
-  const { prediction, lockedDirection, isLoading } = useGame();
+  const { prediction, lockedDirection, isLoading, timeLeft } = useGame();
 
   const lockedPrice = prediction && formatPriceInCents(prediction.startPrice);
   const finalPrice =
     prediction?.finalPrice && formatPriceInCents(prediction.finalPrice);
 
+  const DEFAULT_DURATION = 60;
   const Timer = () => {
     if (isLoading) {
       return <Loader />;
     } else {
-      return <Countdown duration={60} />;
+      return <Countdown timeLeft={timeLeft} duration={DEFAULT_DURATION} />;
     }
   };
 

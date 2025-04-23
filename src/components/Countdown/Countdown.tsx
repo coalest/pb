@@ -2,15 +2,14 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styles from "./Countdown.module.css";
 
 import { useGame } from "../../hooks/useGame";
-import { useUser } from "../../hooks/useUser";
 
 type CountdownProps = {
   duration: number;
+  timeLeft: number;
 };
 
-const Countdown = ({ duration }: CountdownProps) => {
-  const { countdownKey, isCountingDown, closeRound } = useGame();
-  const { user } = useUser();
+const Countdown = ({ duration, timeLeft }: CountdownProps) => {
+  const { user, countdownKey, isCountingDown, closeRound } = useGame();
   const onComplete = () => {
     if (user !== null) closeRound(user?.id);
   };
@@ -19,6 +18,7 @@ const Countdown = ({ duration }: CountdownProps) => {
     <div className={styles.countdown}>
       <CountdownCircleTimer
         isPlaying={isCountingDown}
+        initialRemainingTime={timeLeft}
         key={countdownKey}
         rotation="clockwise"
         duration={duration}

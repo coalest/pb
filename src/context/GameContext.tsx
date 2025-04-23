@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import type { FC, ReactNode } from "react";
 
 import { toast } from "react-toastify";
@@ -7,9 +7,10 @@ import { User, Prediction, PredictionDirection } from "../shared.types";
 
 import { predictionService } from "../services/predictionService";
 import { userService } from "../services/userService";
-import { UserContext } from "./UserContext";
+import { API_CONFIG } from "../config/api";
 
 type GameContextType = {
+  user: User | null;
   prediction: Prediction | null;
   lockedDirection: PredictionDirection | null;
   placeNewPrediction: (userId: string, direction: PredictionDirection) => void;
@@ -18,6 +19,7 @@ type GameContextType = {
   isCountingDown: boolean;
   isLoading: boolean;
   error: string | null;
+  timeLeft: number;
 };
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -25,15 +27,62 @@ export const GameContext = createContext<GameContextType | undefined>(
 );
 
 export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
   const [countdownKey, setCountdownKey] = useState(0);
   const [isCountingDown, setIsCountingDown] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [lockedDirection, setLockedDirection] =
     useState<PredictionDirection | null>(null);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { updateUser } = useContext(UserContext);
+  const updateUser = (userData: User) => setUser(userData);
+
+  const isInProgress = (prediction: Prediction | null) =>
+    prediction && prediction.finishTime > Date.now();
+
+  const initializePrevGameState = (prediction: Prediction) => {
+    const currentTime = Date.now();
+    const secondsLeft = (prediction.finishTime - currentTime) / 1000;
+    const prevDirection = prediction.direction;
+
+    setIsCountingDown(true);
+    setLockedDirection(prevDirection);
+    setPrediction(prediction);
+    setTimeLeft(Math.floor(secondsLeft));
+  };
+
+  // Fetch user from localStorage or create one and store in localStorage
+  useEffect(() => {
+    const initializeUser = async () => {
+      try {
+        const storedId: string | null = localStorage.getItem(
+          API_CONFIG.STORAGE_KEY,
+        );
+
+        let userData: User;
+
+        if (storedId) {
+          userData = await userService.fetchUser(storedId);
+          const lastPrediction =
+            userData.predictions[userData.predictions.length - 1] ?? 0;
+          if (isInProgress(lastPrediction)) {
+            initializePrevGameState(lastPrediction);
+          }
+        } else {
+          userData = await userService.createUser();
+        }
+
+        setUser(userData);
+      } catch (err) {
+        console.error(err);
+        setUser(null);
+      }
+    };
+
+    initializeUser();
+  }, []);
 
   const placeNewPrediction = async (
     userId: string,
@@ -70,6 +119,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setIsCountingDown(false);
     setLockedDirection(null);
     setPrediction(null);
+    setTimeLeft(60);
   };
   const fetchResults = async (userId: string) => {
     try {
@@ -98,6 +148,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <GameContext.Provider
       value={{
+        user,
         isCountingDown,
         countdownKey,
         lockedDirection,
@@ -106,6 +157,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
         isLoading,
         error,
         closeRound,
+        timeLeft,
       }}
     >
       {children}

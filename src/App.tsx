@@ -5,7 +5,6 @@ import "./App.css";
 
 import { ToastContainer } from "react-toastify";
 
-import { UserProvider } from "./context/UserContext";
 import { GameProvider } from "./context/GameContext";
 
 import Header from "./components/Header/Header.tsx";
@@ -15,17 +14,15 @@ import Statistics from "./components/Statistics/Statistics.tsx";
 
 const App: FC = () => {
   return (
-    <UserProvider>
+    <GameProvider>
       <ToastContainer />
-      <GameProvider>
-        <div className="app">
-          <Header />
-          <Prediction />
-          <Game />
-          <Statistics />
-        </div>
-      </GameProvider>
-    </UserProvider>
+      <div className="app">
+        <Header />
+        <Prediction />
+        <Game />
+        <Statistics />
+      </div>
+    </GameProvider>
   );
 };
 
