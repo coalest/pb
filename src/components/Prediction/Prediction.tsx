@@ -13,13 +13,13 @@ import { PredictionDirection } from "../../shared.types.ts";
 
 const Prediction: FC = () => {
   const [currentDirection, setCurrentDirection] =
-    useState<PredictionDirection>(null);
+    useState<PredictionDirection | null>(null);
 
   const { placeNewPrediction, lockedDirection } = useGame();
   const { user } = useUser();
 
-  const handleUpClick = () => setCurrentDirection("up");
-  const handleDownClick = () => setCurrentDirection("down");
+  const handleUpClick = () => setCurrentDirection(PredictionDirection.UP);
+  const handleDownClick = () => setCurrentDirection(PredictionDirection.DOWN);
 
   return (
     <div className={styles.prediction}>
@@ -27,14 +27,14 @@ const Prediction: FC = () => {
 
       <div className={styles.directionButtonsContainer}>
         <Button
-          className={`${currentDirection === "up" ? styles.upButtonSelected : styles.upButton}`}
+          className={`${currentDirection === PredictionDirection.UP ? styles.upButtonSelected : styles.upButton}`}
           disabled={!!lockedDirection}
           onClick={handleUpClick}
         >
           <span>Up</span> <Arrow className={styles.upArrow} />
         </Button>
         <Button
-          className={`${currentDirection === "down" ? styles.downButtonSelected : styles.downButton}`}
+          className={`${currentDirection === PredictionDirection.DOWN ? styles.downButtonSelected : styles.downButton}`}
           disabled={!!lockedDirection}
           onClick={handleDownClick}
         >
@@ -45,7 +45,11 @@ const Prediction: FC = () => {
         <Button
           className={styles.predictButton}
           disabled={!!lockedDirection}
-          onClick={() => user && placeNewPrediction(user.id, currentDirection)}
+          onClick={() =>
+            user &&
+            currentDirection &&
+            placeNewPrediction(user.id, currentDirection)
+          }
         >
           Place Prediction
         </Button>

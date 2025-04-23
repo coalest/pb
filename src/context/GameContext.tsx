@@ -11,7 +11,7 @@ import { UserContext } from "./UserContext";
 
 type GameContextType = {
   prediction: Prediction | null;
-  lockedDirection: PredictionDirection;
+  lockedDirection: PredictionDirection | null;
   placeNewPrediction: (userId: string, direction: PredictionDirection) => void;
   closeRound: (userId: string) => void;
   countdownKey: number;
@@ -28,7 +28,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [countdownKey, setCountdownKey] = useState(0);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [lockedDirection, setLockedDirection] =
-    useState<PredictionDirection>(null);
+    useState<PredictionDirection | null>(null);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
