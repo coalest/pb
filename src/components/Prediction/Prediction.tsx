@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 
 import styles from "./Prediction.module.css";
 
@@ -11,27 +11,27 @@ import { useGame } from "../../hooks/useGame";
 import { PredictionDirection } from "../../shared.types.ts";
 
 const Prediction: FC = () => {
-  const { user, placeNewPrediction, lockedDirection } = useGame();
-
-  const [currentDirection, setCurrentDirection] =
-    useState<PredictionDirection | null>(null);
-
-  const disabled = !!lockedDirection;
+  const {
+    user,
+    currentDirection,
+    updateCurrentDirection,
+    placeNewPrediction,
+    lockedDirection,
+  } = useGame();
 
   const upButtonStyles =
-    currentDirection === PredictionDirection.UP ||
-    lockedDirection === PredictionDirection.UP
+    currentDirection === PredictionDirection.UP
       ? `${styles.upButton} ${styles.active}`
       : styles.upButton;
 
   const downButtonStyles =
-    currentDirection === PredictionDirection.DOWN ||
-    lockedDirection === PredictionDirection.DOWN
+    currentDirection === PredictionDirection.DOWN
       ? `${styles.downButton} ${styles.active}`
       : styles.downButton;
 
-  const handleUpClick = () => setCurrentDirection(PredictionDirection.UP);
-  const handleDownClick = () => setCurrentDirection(PredictionDirection.DOWN);
+  const handleUpClick = () => updateCurrentDirection(PredictionDirection.UP);
+  const handleDownClick = () =>
+    updateCurrentDirection(PredictionDirection.DOWN);
   const handlePredict = () =>
     user && currentDirection && placeNewPrediction(user.id, currentDirection);
 
@@ -42,14 +42,14 @@ const Prediction: FC = () => {
       <div className={styles.directionButtonsContainer}>
         <Button
           className={upButtonStyles}
-          disabled={disabled}
+          disabled={lockedDirection}
           onClick={handleUpClick}
         >
           <span>Up</span> <Arrow className={styles.upArrow} />
         </Button>
         <Button
           className={downButtonStyles}
-          disabled={disabled}
+          disabled={lockedDirection}
           onClick={handleDownClick}
         >
           <span>Down</span> <Arrow className={styles.downArrow} />
@@ -58,7 +58,7 @@ const Prediction: FC = () => {
       <div className={styles.predictButtonContainer}>
         <Button
           className={styles.predictButton}
-          disabled={disabled}
+          disabled={lockedDirection}
           onClick={handlePredict}
         >
           Place Prediction

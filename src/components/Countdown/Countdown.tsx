@@ -11,7 +11,7 @@ type CountdownProps = {
 const Countdown = ({ duration, timeLeft }: CountdownProps) => {
   const { user, countdownKey, isCountingDown, closeRound } = useGame();
   const onComplete = () => {
-    if (user !== null) closeRound(user?.id);
+    if (user !== null) closeRound(user.id);
   };
 
   return (

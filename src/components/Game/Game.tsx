@@ -25,7 +25,7 @@ const Loader: FC = () => {
 };
 
 const Game: FC = () => {
-  const { prediction, lockedDirection, isLoading, timeLeft } = useGame();
+  const { prediction, isLoading, timeLeft } = useGame();
 
   const lockedPrice = prediction && formatPriceInCents(prediction.startPrice);
   const finalPrice =
@@ -48,7 +48,7 @@ const Game: FC = () => {
         <GameBox>
           <div>
             <h4>Your prediction</h4>
-            <p>{lockedDirection}</p>
+            <p>{prediction?.direction}</p>
           </div>
         </GameBox>
         <GameBox>

@@ -12,7 +12,7 @@ import { API_CONFIG } from "../config/api";
 type GameContextType = {
   user: User | null;
   prediction: Prediction | null;
-  lockedDirection: PredictionDirection | null;
+  lockedDirection: boolean;
   placeNewPrediction: (userId: string, direction: PredictionDirection) => void;
   closeRound: (userId: string) => void;
   countdownKey: number;
@@ -20,6 +20,8 @@ type GameContextType = {
   isLoading: boolean;
   error: string | null;
   timeLeft: number;
+  currentDirection: PredictionDirection | null;
+  updateCurrentDirection: (direction: PredictionDirection) => void;
 };
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -31,13 +33,16 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [countdownKey, setCountdownKey] = useState(0);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
-  const [lockedDirection, setLockedDirection] =
-    useState<PredictionDirection | null>(null);
+  const [lockedDirection, setLockedDirection] = useState(false);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentDirection, setCurrentDirection] =
+    useState<PredictionDirection | null>(null);
 
   const updateUser = (userData: User) => setUser(userData);
+  const updateCurrentDirection = (direction: PredictionDirection) =>
+    setCurrentDirection(direction);
 
   const isInProgress = (prediction: Prediction | null) =>
     prediction && prediction.finishTime > Date.now();
@@ -48,7 +53,8 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const prevDirection = prediction.direction;
 
     setIsCountingDown(true);
-    setLockedDirection(prevDirection);
+    setLockedDirection(true);
+    setCurrentDirection(prevDirection);
     setPrediction(prediction);
     setTimeLeft(Math.floor(secondsLeft));
   };
@@ -94,7 +100,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
     setIsLoading(true);
     setError(null);
-    setLockedDirection(direction);
+    setLockedDirection(true);
 
     try {
       const user = await predictionService.placePrediction(userId, direction);
@@ -108,7 +114,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
       if (err instanceof Error) {
         toast.error(err.message);
       }
-      setLockedDirection(null);
+      setLockedDirection(false);
       console.error("API request error:", err);
     } finally {
       setIsLoading(false);
@@ -117,9 +123,9 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const resetGame = () => {
     setCountdownKey(countdownKey + 1);
     setIsCountingDown(false);
-    setLockedDirection(null);
+    setLockedDirection(false);
+    setCurrentDirection(null);
     setPrediction(null);
-    setTimeLeft(60);
   };
   const fetchResults = async (userId: string) => {
     try {
@@ -129,8 +135,9 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
       updateUser?.(user);
       setIsLoading(false);
-      setPrediction(lastPrediction);
       setIsCountingDown(false);
+      setTimeLeft(60);
+      setPrediction(lastPrediction);
       setTimeout(resetGame, 3000);
       if (lastPrediction.status) toast(`You ${lastPrediction.status}!`);
     } catch (err) {
@@ -152,6 +159,8 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
         isCountingDown,
         countdownKey,
         lockedDirection,
+        currentDirection,
+        updateCurrentDirection,
         placeNewPrediction,
         prediction,
         isLoading,
