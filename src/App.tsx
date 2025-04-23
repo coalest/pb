@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import "./styles/reset.css";
+import "./styles/variables.css";
 import "./App.css";
 
 import { ToastContainer } from "react-toastify";

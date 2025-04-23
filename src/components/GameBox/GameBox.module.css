@@ -1,6 +1,6 @@
 .gameBox {
-  border: 2px dashed #000000;
-  background: #ffffff;
+  border: 2px dashed black;
+  background: white;
   width: 174px;
   height: 174px;
   display: block;

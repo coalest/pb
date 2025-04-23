@@ -1,12 +1,12 @@
 .prediction {
   grid-area: left-sidebar;
-  border-right: 2px solid #27437b;
+  border-right: 2px solid var(--primary);
   padding: 16px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  background: #333232;
+  background: var(--grey-bg);
 }
 
 .prediction h2 {
@@ -20,12 +20,12 @@
 
 .upArrow {
   display: inline;
-  color: #06d6a0;
+  color: var(--green);
 }
 
 .downArrow {
   display: inline;
-  color: #ef476f;
+  color: var(--pink);
   transform: rotate(180deg);
 }
 
@@ -44,21 +44,21 @@
 }
 
 .upButtonSelected {
-  border: 5px solid #06d6a0;
+  border: 5px solid var(--green);
 }
 
 .upButton:hover,
 .upButtonSelected:hover {
-  border-color: #06d6a0;
+  border-color: var(--green);
 }
 
 .downButtonSelected {
-  border: 5px solid #ef476f;
+  border: 5px solid var(--pink);
 }
 
 .downButton:hover,
 .downButtonSelected:hover {
-  border-color: #ef476f;
+  border-color: var(--pink);
 }
 
 .predictButton {
@@ -67,7 +67,7 @@
   max-width: 305px;
   margin: 25px 24px;
   color: white;
-  background: #004adf;
+  background: var(--primary);
   font-weight: 600;
   font-size: 28px;
 }

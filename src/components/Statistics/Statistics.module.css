@@ -1,6 +1,6 @@
 .statistics {
   grid-area: right-sidebar;
-  border-left: 2px solid #27437b;
+  border-left: 2px solid var(--primary);
 
   min-height: 100%;
   display: flex;
@@ -8,7 +8,7 @@
   align-items: center;
   padding-top: 3rem;
 
-  background: #333232;
+  background: var(--grey-bg);
 }
 
 .statistics h2 {
@@ -35,7 +35,7 @@ table {
 }
 td,
 th {
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid white;
   padding: 0.5rem;
   white-space: nowrap;
 }

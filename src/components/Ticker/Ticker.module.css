@@ -13,11 +13,11 @@
 
 .upArrow {
   display: inline;
-  color: #06d6a0;
+  color: var(--green);
 }
 
 .downArrow {
   display: inline;
-  color: #ef476f;
+  color: var(--pink);
   transform: rotate(180deg);
 }
