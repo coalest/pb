@@ -9,12 +9,7 @@ type ButtonProps = {
 
 const Button = ({ className, onClick, disabled, children }: ButtonProps) => {
   return (
-    <button
-      style={{ outline: "none" }} // Fix white outline in Chrome
-      className={className}
-      disabled={disabled}
-      onClick={onClick}
-    >
+    <button className={className} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );
