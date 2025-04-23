@@ -19,8 +19,9 @@ const Countdown = ({ duration }: CountdownProps) => {
         key={countdownKey}
         rotation="clockwise"
         duration={duration}
-        colors={"#004adf"}
-        // colorsTime={[60, 2, 1, 0]}
+        colors={["#004adf", "#ee4b2b"]}
+        colorsTime={[60, 10, 0]}
+        isSmoothColorTransition={false}
         onComplete={() => {
           if (user !== null) {
             closeRound(user.id);
