@@ -37,7 +37,7 @@ const Prediction: FC = () => {
 
   return (
     <div className={styles.prediction}>
-      <h2 style={{ padding: "2rem" }}>Will the price of Bitcoin go:</h2>
+      <h2 style={{ padding: "2rem 1rem" }}>Will the price of Bitcoin go:</h2>
 
       <div className={styles.directionButtonsContainer}>
         <Button

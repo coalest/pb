@@ -132,7 +132,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setPrediction(lastPrediction);
       setIsCountingDown(false);
       setTimeout(resetGame, 3000);
-      toast(`You ${lastPrediction.status}!`);
+      if (lastPrediction.status) toast(`You ${lastPrediction.status}!`);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred",
