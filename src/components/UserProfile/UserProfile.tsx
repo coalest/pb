@@ -1,7 +1,7 @@
-import React from "react";
+import { FC } from "react";
 import { useUser } from "../../hooks/useUser";
 
-export const UserProfile: React.FC = () => {
+export const UserProfile: FC = () => {
   const { user, loading, error } = useUser();
 
   if (loading) return <div>Loading user data...</div>;

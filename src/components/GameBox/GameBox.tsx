@@ -1,8 +1,8 @@
-import React from "react";
+import type { ReactNode } from "react";
 import styles from "./GameBox.module.css";
 
 type GameBoxProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const GameBox = ({ children }: GameBoxProps) => {

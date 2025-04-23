@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styles from "./Countdown.module.css";
 

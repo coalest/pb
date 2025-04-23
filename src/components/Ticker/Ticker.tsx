@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 import styles from "./Ticker.module.css";
 
 import BitcoinLogo from "../BitcoinLogo/BitcoinLogo";
@@ -12,7 +12,7 @@ interface TickerProps {
   refreshInterval: number;
 }
 
-const Ticker: React.FC<TickerProps> = ({
+const Ticker: FC<TickerProps> = ({
   crypto = "BTC",
   refreshInterval = 1000,
 }) => {

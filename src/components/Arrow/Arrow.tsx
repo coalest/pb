@@ -1,10 +1,10 @@
-import React from "react";
+import type { FC } from "react";
 
 interface ArrowProps {
   className: string;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ className }) => {
+const Arrow: FC<ArrowProps> = ({ className }) => {
   return (
     <svg
       className={className}

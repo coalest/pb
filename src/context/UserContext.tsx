@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
+import type { FC, ReactNode } from "react";
 import { User } from "../shared.types.ts";
 import { API_CONFIG } from "../config/api";
 import { userService } from "../services/userService";
@@ -10,15 +11,13 @@ export type UserContextType = {
   updateUser?: (userData: User) => void;
 };
 
-export const UserContext = React.createContext<UserContextType>({
+export const UserContext = createContext<UserContextType>({
   user: null,
   loading: true,
   error: null,
 });
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

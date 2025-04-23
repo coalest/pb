@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import styles from "./Game.module.css";
 
 import Ticker from "../Ticker/Ticker.tsx";
@@ -9,9 +9,9 @@ import { useGame } from "../../hooks/useGame.tsx";
 
 import { formatPriceInCents } from "../../utils/formatPrice.ts";
 
-const LoadingDots: React.FC = () => <div className={styles.loader}></div>;
+const LoadingDots: FC = () => <div className={styles.loader}></div>;
 
-const Loader: React.FC = () => {
+const Loader: FC = () => {
   return (
     <div style={{ display: "flex", width: "180px", height: "180px" }}>
       <div
@@ -24,7 +24,7 @@ const Loader: React.FC = () => {
   );
 };
 
-const Game: React.FC = () => {
+const Game: FC = () => {
   const { prediction, lockedDirection, isLoading } = useGame();
 
   return (

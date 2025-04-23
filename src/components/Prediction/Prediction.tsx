@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
+
 import styles from "./Prediction.module.css";
 
 import Arrow from "../Arrow/Arrow.tsx";
@@ -10,7 +11,7 @@ import { useGame } from "../../hooks/useGame";
 
 import { PredictionDirection } from "../../shared.types.ts";
 
-const Prediction: React.FC = () => {
+const Prediction: FC = () => {
   const [currentDirection, setCurrentDirection] =
     useState<PredictionDirection>(null);
 

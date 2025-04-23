@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import styles from "./Tutorial.module.css";
 
-const Tutorial: React.FC = () => {
+const Tutorial: FC = () => {
   return (
     <div className={styles.tutorial}>
       <h3> How to play:</h3>

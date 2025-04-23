@@ -1,4 +1,6 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
+import type { FC, ReactNode } from "react";
+
 import { toast } from "react-toastify";
 
 import { User, Prediction, PredictionDirection } from "../shared.types";
@@ -22,9 +24,7 @@ export const GameContext = createContext<GameContextType | undefined>(
   undefined,
 );
 
-export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [countdownKey, setCountdownKey] = useState(0);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [lockedDirection, setLockedDirection] =
@@ -45,20 +45,21 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     setIsLoading(true);
     setError(null);
-
     setLockedDirection(direction);
-    setCountdownKey(countdownKey + 1);
-    setIsCountingDown(true);
 
     try {
       const user = await predictionService.placePrediction(userId, direction);
       const lastPrediction = user.predictions[user.predictions.length - 1];
 
       setPrediction(lastPrediction);
+
+      setCountdownKey(countdownKey + 1);
+      setIsCountingDown(true);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred",
-      );
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+      setLockedDirection(null);
       console.error("API request error:", err);
     } finally {
       setIsLoading(false);

@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import styles from "./Statistics.module.css";
 
 import { useUser } from "../../hooks/useUser";
 
 import { formatPriceInCents } from "../../utils/formatPrice";
 
-const Statistics: React.FC = () => {
+const Statistics: FC = () => {
   const { user } = useUser();
 
   return (

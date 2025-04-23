@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import "./styles/reset.css";
 import "./App.css";
 
@@ -12,7 +12,7 @@ import Prediction from "./components/Prediction/Prediction.tsx";
 import Game from "./components/Game/Game.tsx";
 import Statistics from "./components/Statistics/Statistics.tsx";
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <UserProvider>
       <ToastContainer />

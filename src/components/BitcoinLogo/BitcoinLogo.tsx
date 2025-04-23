@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import styles from "./BitcoinLogo.module.css";
 
 interface BitcoinLogoProps {
   className: string;
 }
 
-const BitcoinLogo: React.FC<BitcoinLogoProps> = () => {
+const BitcoinLogo: FC<BitcoinLogoProps> = () => {
   return (
     <svg
       className={styles.bitcoinLogo}
