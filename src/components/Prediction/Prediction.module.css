@@ -61,7 +61,7 @@
   border-color: #ef476f;
 }
 
-.predictionButton {
+.predictButton {
   display: block;
   width: 100%;
   margin: 25px 24px;
@@ -71,14 +71,23 @@
   font-size: 28px;
 }
 
-.predictionButton:hover {
+.predictButton:hover {
   background: #4478e1;
 }
 
-.predictionButton:disabled {
+.predictButton:disabled {
   background: #95a4c2;
 }
-
+.predictButtonContainer {
+  gap: 25px;
+  display: flex;
+  justify-content: center;
+}
+.directionButtonsContainer {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}
 button {
   border-radius: 8px;
   padding: 0.25rem 0.5rem;

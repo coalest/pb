@@ -1,5 +1,6 @@
-const formatPrice = (price: number) => {
-  return price.toLocaleString("en-US", { minimumFractionDigits: 2 });
-};
+export const formatPrice = (price: number) =>
+  "$" + price.toLocaleString("en-US", { minimumFractionDigits: 2 });
 
-export default formatPrice;
+export const formatPriceInCents = (price: number) => {
+  return formatPrice(price / 100);
+};

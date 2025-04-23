@@ -15,7 +15,8 @@
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-countdown-circle-timer": "^3.2.1",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.15.0",

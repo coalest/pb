@@ -3,7 +3,9 @@ import styles from "./Ticker.module.css";
 
 import BitcoinLogo from "../BitcoinLogo/BitcoinLogo";
 import Arrow from "../Arrow/Arrow";
-import formatPrice from "../../utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
+
+import { API_CONFIG } from "../../config/api";
 
 interface TickerProps {
   crypto: string;
@@ -27,12 +29,11 @@ const Ticker: React.FC<TickerProps> = ({
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   // TODO: Extract websocket logic into a hook/service
-  useEffect(() => {
-    let ws: WebSocket | null = null;
+  let ws: WebSocket | null = null;
 
+  useEffect(() => {
     const connectWebSocket = () => {
-      // Using OKC API for BTC/USDT price
-      ws = new WebSocket("wss://ws.okx.com:8443/ws/v5/public");
+      ws = new WebSocket(API_CONFIG.WEBSOCKET_URI);
 
       const subscribe = {
         op: "subscribe",
@@ -76,7 +77,6 @@ const Ticker: React.FC<TickerProps> = ({
 
         setIsConnected(false);
 
-        // Try to reconnect after a delay
         setTimeout(() => {
           if (ws?.readyState === WebSocket.CLOSED) {
             connectWebSocket();
@@ -101,7 +101,7 @@ const Ticker: React.FC<TickerProps> = ({
         <BitcoinLogo className={styles.bitcoinLogo} />
 
         <div className="price" style={{ display: "inline", fontSize: "5rem" }}>
-          ${tickerPrice.price === 0 ? " " : formatPrice(tickerPrice.price)}
+          {tickerPrice.price === 0 ? " " : formatPrice(tickerPrice.price)}
         </div>
         <div style={{ display: "inline-flex", flexDirection: "column" }}>
           <Arrow className={styles.upArrow} />

@@ -2,22 +2,31 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styles from "./Countdown.module.css";
 
+import { useGame } from "../../hooks/useGame";
+import { useUser } from "../../hooks/useUser";
+
 type CountdownProps = {
   duration: number;
 };
 
 const Countdown = ({ duration }: CountdownProps) => {
-  const onComplete = () => console.log("Countdown completed!");
+  const { countdownKey, isCountingDown, closeRound } = useGame();
+  const { user } = useUser();
 
   return (
     <div className={styles.countdown}>
       <CountdownCircleTimer
-        isPlaying
+        isPlaying={isCountingDown}
+        key={countdownKey}
         rotation="clockwise"
         duration={duration}
         colors={"#004adf"}
         // colorsTime={[60, 2, 1, 0]}
-        onComplete={onComplete}
+        onComplete={() => {
+          if (user !== null) {
+            closeRound(user.id);
+          }
+        }}
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>
