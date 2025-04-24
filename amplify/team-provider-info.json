@@ -16,7 +16,7 @@
       "function": {
         "usersLambda": {
           "deploymentBucketName": "amplify-predictabit-dev-3d03b-deployment",
-          "s3Key": "amplify-builds/usersLambda-6c654a77696f73723138-build.zip"
+          "s3Key": "amplify-builds/usersLambda-4c516c75396a72354230-build.zip"
         },
         "predictionsLambda": {
           "deploymentBucketName": "amplify-predictabit-dev-3d03b-deployment",

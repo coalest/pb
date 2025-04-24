@@ -84,7 +84,7 @@ app.post(path, async function (req, res) {
   };
   try {
     await ddbDocClient.send(new PutCommand(putItemParams));
-    res.json({ id: userId });
+    res.json({ id: userId, score: 0, predictions: [] });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Internal server error" });
